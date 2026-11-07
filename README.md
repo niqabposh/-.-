@@ -1,2 +1,133 @@
-# -.-
-Whatsapp-Bot
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abdullah Sial Abdullah Mobile Shop - 40% OFF</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#f2f2f2}
+header{background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);color:#fff;text-align:center;padding:25px 15px;position:sticky;top:0;z-index:100}
+header h1{font-size:26px}
+header p{margin-top:5px;color:#ffd700;font-weight:bold}
+.search-bar{margin:15px auto;max-width:500px;display:flex;gap:8px;padding:0 15px}
+.search-bar input{flex:1;padding:12px;border-radius:25px;border:1px solid #ddd;outline:none}
+.search-bar button{padding:12px 20px;border:none;background:#25D366;color:#fff;border-radius:25px;font-weight:bold}
+.brands{display:flex;gap:10px;overflow-x:auto;padding:10px 15px}
+.brands button{white-space:nowrap;padding:8px 16px;border-radius:20px;border:1px solid #ddd;background:#fff;cursor:pointer}
+.brands button.active{background:#000;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:15px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
+.card{background:#fff;border-radius:15px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.1);position:relative}
+.card img{width:100%;height:200px;object-fit:cover}
+.badge{position:absolute;top:10px;left:10px;background:#ff0000;color:#fff;padding:5px 10px;border-radius:20px;font-size:12px;font-weight:bold}
+.card-body{padding:12px;text-align:center}
+.card-body h3{font-size:15px}
+.old{color:#999;text-decoration:line-through;font-size:13px}
+.new{color:#e60000;font-size:18px;font-weight:bold}
+.card-body p{font-size:12px;color:#666;margin:5px 0}
+.thumbs{display:flex;justify-content:center;gap:5px;margin:8px 0}
+.thumbs img{width:45px;height:45px;object-fit:cover;border-radius:8px;border:2px solid #eee;cursor:pointer}
+.thumbs img.active{border-color:#25D366}
+.btn{display:block;background:#25D366;color:#fff;text-decoration:none;padding:11px;border-radius:10px;font-weight:bold;margin-top:8px}
+.btn2{display:block;background:#000;color:#fff;text-decoration:none;padding:10px;border-radius:10px;margin-top:6px;font-size:13px}
+footer{background:#000;color:#fff;text-align:center;padding:20px;margin-top:20px}
+</style>
+</head>
+<body>
+
+<header>
+<h1>Abdullah Sial Abdullah Mobile Shop</h1>
+<p>🔥 MEGA SALE - HAR MOBILE PAR 40% OFF 🔥</p>
+<p style="color:#fff;font-size:13px">Pakistan Ki Sab Se Sasti Mobile Shop | Dunyapur</p>
+</header>
+
+<div class="search-bar">
+<input id="search" placeholder="Mobile dhoondain... iPhone, Samsung, Vivo..." onkeyup="filter()">
+<button onclick="filter()">Search</button>
+</div>
+
+<div class="brands" id="brands">
+<button class="active" onclick="filterBrand('All',this)">All</button>
+<button onclick="filterBrand('iPhone',this)">iPhone</button>
+<button onclick="filterBrand('Samsung',this)">Samsung</button>
+<button onclick="filterBrand('Vivo',this)">Vivo</button>
+<button onclick="filterBrand('Oppo',this)">Oppo</button>
+<button onclick="filterBrand('Infinix',this)">Infinix</button>
+<button onclick="filterBrand('Tecno',this)">Tecno</button>
+<button onclick="filterBrand('Redmi',this)">Redmi</button>
+<button onclick="filterBrand('Poco',this)">Poco</button>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<footer>
+<h3>Abdullah Sial Abdullah Mobile Shop</h3>
+<p>Jazz Number: <b>03XX-XXXXXXX (Aap baad me batayein ge)</b></p>
+<p>WhatsApp Order Ke Liye Neeche Button Dabain</p>
+<a href="https://wa.me/923XXXXXXXXX?text=Assalam-o-Alaikum%20Mujhe%20Mobile%20Order%20Karna%20Hai" style="color:#25D366;font-weight:bold">WhatsApp Par Order Karein</a>
+</footer>
+
+<script>
+// APNA WHATSAPP NUMBER YAHAN LIKHAIN - 92 ke sath, bina 0 ke
+const WHATSAPP = "923XXXXXXXXX";
+
+const phones = [
+{name:"iPhone 15 Pro Max",brand:"iPhone",old:450000,ram:"8GB / 256GB",img:["https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500","https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500","https://images.unsplash.com/photo-1591337676887-a217a6970a8a?w=500"]},
+{name:"iPhone 14",brand:"iPhone",old:320000,ram:"6GB / 128GB",img:["https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500","https://images.unsplash.com/photo-1591337676887-a217a6970a8a?w=500","https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500"]},
+{name:"Samsung Galaxy S24 Ultra",brand:"Samsung",old:380000,ram:"12GB / 512GB",img:["https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500","https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=500","https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=500"]},
+{name:"Samsung Galaxy A55",brand:"Samsung",old:145000,ram:"8GB / 256GB",img:["https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500","https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=500","https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=500"]},
+{name:"Vivo V30",brand:"Vivo",old:125000,ram:"12GB / 256GB",img:["https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500","https://images.unsplash.com/photo-1580910051074-3eb694886505?w=500","https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500"]},
+{name:"Oppo Reno 11",brand:"Oppo",old:115000,ram:"8GB / 256GB",img:["https://images.unsplash.com/photo-1580910051074-3eb694886505?w=500","https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500","https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500"]},
+{name:"Infinix Note 40 Pro",brand:"Infinix",old:75000,ram:"12GB / 256GB",img:["https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=500","https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500","https://images.unsplash.com/photo-1580910051074-3eb694886505?w=500"]},
+{name:"Tecno Camon 30",brand:"Tecno",old:65000,ram:"12GB / 256GB",img:["https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500","https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500","https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=500"]},
+{name:"Redmi Note 13 Pro",brand:"Redmi",old:85000,ram:"12GB / 512GB",img:["https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500","https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=500","https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500"]},
+{name:"Poco X6 Pro",brand:"Poco",old:95000,ram:"12GB / 512GB",img:["https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=500","https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500","https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500"]},
+];
+// 100 mobiles ke liye list ko copy karke naam / qeemat badal lein
+
+let currentBrand = 'All';
+function render(list){
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  list.forEach((p,i)=>{
+    const newPrice = Math.round(p.old * 0.6);
+    grid.innerHTML += `
+    <div class="card">
+      <span class="badge">40% OFF</span>
+      <img id="main${i}" src="${p.img[0]}">
+      <div class="card-body">
+        <h3>${p.name}</h3>
+        <p>${p.ram} | HD Display | PTA Approved</p>
+        <div class="thumbs">
+          <img src="${p.img[0]}" class="active" onclick="changeImg(${i},0,this)">
+          <img src="${p.img[1]}" onclick="changeImg(${i},1,this)">
+          <img src="${p.img[2]}" onclick="changeImg(${i},2,this)">
+        </div>
+        <span class="old">Rs ${p.old.toLocaleString()}</span><br>
+        <span class="new">Rs ${newPrice.toLocaleString()}</span>
+        <a class="btn" target="_blank" href="https://wa.me/${WHATSAPP}?text=Assalam-o-Alaikum! Mujhe ${encodeURIComponent(p.name)} Order Karna Hai. Price Rs ${newPrice} (40% OFF) - Abdullah Mobile Shop">🟢 WhatsApp Par Order Karein</a>
+        <a class="btn2" href="tel:03XXXXXXXXX">📞 Call Karein</a>
+      </div>
+    </div>`;
+  });
+}
+function changeImg(i,idx,el){
+  document.getElementById('main'+i).src = phones[i].img[idx];
+  el.parentElement.querySelectorAll('img').forEach(x=>x.classList.remove('active'));
+  el.classList.add('active');
+}
+function filter(){
+  const q = document.getElementById('search').value.toLowerCase();
+  render(phones.filter(p => (currentBrand==='All' || p.brand===currentBrand) && p.name.toLowerCase().includes(q)));
+}
+function filterBrand(b,el){
+  currentBrand=b;
+  document.querySelectorAll('.brands button').forEach(x=>x.classList.remove('active'));
+  el.classList.add('active');
+  filter();
+}
+render(phones);
+</script>
+</body>
+</html>
